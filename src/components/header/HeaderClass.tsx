@@ -3,11 +3,26 @@ import styles from './Header.module.css'
 import logo from './../../assets/logo.svg'
 import { Layout, Typography, Input, Menu, Button, Dropdown } from 'antd'
 import { GlobalOutlined } from '@ant-design/icons'
-
+import store from './../../redux/store'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
-
-class Headers extends React.Component<RouteComponentProps> {
-
+import {LanguageState} from '../../redux/languageReducer'
+interface State extends LanguageState{
+    
+}
+class Headers extends React.Component<RouteComponentProps, State> {
+    
+    // constructor(props){
+    //     super(props)
+    //     const storeState=store.getState();
+    //     this.state={
+    //         language:storeState.language,
+    //         languageList:storeState.languageList
+    //     }
+    // }
+    state={
+        language:store.getState().language,
+        languageList:store.getState().languageList
+    }
     render() {
         const { history }=this.props
         return (
@@ -18,13 +33,17 @@ class Headers extends React.Component<RouteComponentProps> {
                         style={{ marginLeft: 15 }}
                         overlay={
                             <Menu>
-                                <Menu.Item>中文</Menu.Item>
-                                <Menu.Item>English</Menu.Item>
+                                {
+                                    
+                                    this.state.languageList.map(l=>{
+                                        return <Menu.Item key={l.code}>{l.name}</Menu.Item>
+                                    })
+                                }
                             </Menu>
                         }
                         icon={<GlobalOutlined />}
                     >
-                        语言
+                        {this.state.language==='zh'?"中文":"English"}
                     </Dropdown.Button>
                     <Button.Group className={styles['button-groud']}>
                         <Button onClick={() => history.push("register")}>注册</Button>

@@ -1,4 +1,4 @@
-interface LanguageState{
+export interface LanguageState{
     language : 'en' | 'zh';
     languageList: {name:string,code:string}[]
 }
