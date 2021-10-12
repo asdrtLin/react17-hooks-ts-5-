@@ -3,6 +3,11 @@ export interface LanguageState{
     languageList: {name:string,code:string}[]
 }
 
+
+// type:"chang_language",
+//             payload:e.key
+
+
 const defaultState :LanguageState={
     language:"zh",
     languageList:[
@@ -12,5 +17,11 @@ const defaultState :LanguageState={
 }
 
 export default (state=defaultState,action:any)=>{
+    console.log(state)
+    if(action.type==='change_language'){
+        const newState = {...state,language:action.payload};
+        
+        return newState;
+    }
     return state
 }

@@ -11,19 +11,13 @@ interface State extends LanguageState{
 }
 class Headers extends React.Component<RouteComponentProps, State> {
     
-    // constructor(props){
-    //     super(props)
-    //     const storeState=store.getState();
-    //     this.state={
-    //         language:storeState.language,
-    //         languageList:storeState.languageList
-    //     }
-    // }
     state={
         language:store.getState().language,
         languageList:store.getState().languageList
     }
+
     render() {
+        
         const { history }=this.props
         return (
             <div className={styles['app-header']}>
@@ -32,11 +26,17 @@ class Headers extends React.Component<RouteComponentProps, State> {
                     <Dropdown.Button
                         style={{ marginLeft: 15 }}
                         overlay={
-                            <Menu>
+                            <Menu onClick={({ item, key, keyPath, domEvent })=>{
+                                const action = {
+                                    type:"change_language",
+                                    payload:key
+                                }
+                                store.dispatch(action)
+                            }}>
                                 {
                                     
                                     this.state.languageList.map(l=>{
-                                        return <Menu.Item key={l.code}>{l.name}</Menu.Item>
+                                        return <Menu.Item key={l.code} >{l.name}</Menu.Item>
                                     })
                                 }
                             </Menu>
