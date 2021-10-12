@@ -1,6 +1,6 @@
 import React from 'react'
 import { Image, Typography } from 'antd'
-import { withRouter, RouteComponentProps } from 'react-router-dom'
+import { withRouter, RouteComponentProps , Link } from 'react-router-dom'
 interface PropsType extends RouteComponentProps {
     id: string | number;
     size: 'large' | "small";
@@ -10,7 +10,7 @@ interface PropsType extends RouteComponentProps {
 }
 const ProductImage: React.FC<PropsType> = ({ id, size, imageSrc, price, title , history , location ,match }) => {
     return (
-        <div onClick={()=>history.push(`detail/${id}`)}>
+        <Link to={`/detail/${id}`}>
             {
                 size === 'large' ?
                     <Image src={imageSrc} height={285} width={490} /> :
@@ -22,7 +22,7 @@ const ProductImage: React.FC<PropsType> = ({ id, size, imageSrc, price, title , 
                     ￥{price}起
                 </Typography.Text>
             </div>
-        </div>
+        </Link>
     )
 }
 export default withRouter(ProductImage)
