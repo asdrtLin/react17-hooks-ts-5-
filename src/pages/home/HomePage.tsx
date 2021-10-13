@@ -6,8 +6,13 @@ import sideImage2 from '../../assets/images/sider_2019_02-04.png'
 import sideImage3 from '../../assets/images/sider_2019_02-04-2.png'
 import { Row, Col, Typography } from 'antd'
 import styles from './HomePage.module.css'
-class HomePage extends Component {
+import { withTranslation ,WithTranslation } from 'react-i18next'
+
+
+class HomePageComponent extends Component<WithTranslation> {
     render() {
+        // console.log(this.props.t)
+        const {t}=this.props
         return (
             <div>
                 <Header />
@@ -25,17 +30,17 @@ class HomePage extends Component {
                         </Col>
                     </Row>
                     <ProductCollection
-                        title={<Typography.Title level={3} type='warning' >爆款推荐</Typography.Title>}
+                        title={<Typography.Title level={3} type='warning' >{t('home_page.hot_recommended')}</Typography.Title>}
                         sideImage={sideImage}
                         products={productList1}
                     />
                     <ProductCollection
-                        title={<Typography.Title level={3} type='danger' >新品上市</Typography.Title>}
+                        title={<Typography.Title level={3} type='danger' >{t('home_page.new_arrival')}</Typography.Title>}
                         sideImage={sideImage2}
                         products={productList2}
                     />
                     <ProductCollection
-                        title={<Typography.Title level={3} type='danger' >国内游推荐</Typography.Title>}
+                        title={<Typography.Title level={3} type='danger' >{t('home_page.domestic_travel')}</Typography.Title>}
                         sideImage={sideImage3}
                         products={productList3}
                     />
@@ -45,4 +50,4 @@ class HomePage extends Component {
         )
     }
 }
-export  {HomePage}
+export const HomePage=withTranslation()(HomePageComponent)
