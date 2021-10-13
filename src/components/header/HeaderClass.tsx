@@ -5,9 +5,12 @@ import { Layout, Typography, Input, Menu, Button, Dropdown } from "antd";
 import { GlobalOutlined } from "@ant-design/icons";
 import store from "./../../redux/store";
 import { withRouter, RouteComponentProps } from "react-router-dom";
-import { LanguageState } from "../../redux/languageReducer";
+import { LanguageState } from "../../redux/language/languageReducer";
 
 import { withTranslation, WithTranslation } from "react-i18next";
+
+import { addLanguageActionCreator , changeLanguageActionCreator } from '../../redux/language/createAction'
+
 interface State extends LanguageState {}
 interface Props extends RouteComponentProps, WithTranslation {}
 
@@ -42,20 +45,15 @@ class Headers extends React.Component<Props, State> {
                   let action = null;
                   if (key === "new") {
                     //添加
-                    action = {
-                      type: "add_language",
-                      payload: {
-                        code: `new_lang${new Date().getTime()}`,
-                        name: "新语言",
-                      },
-                    };
+                    action =addLanguageActionCreator('新语言',`new_lang${new Date().getTime()}`)
+                    store.dispatch(action);
                   } else {
-                    action = {
-                      type: "change_language",
-                      payload: key,
-                    };
+                    if(key==='zh' || key==='en'){
+                      action = changeLanguageActionCreator(key)
+                      store.dispatch(action);
+                    }
                   }
-                  store.dispatch(action);
+                  
                 }}
               >
                 {this.state.languageList.map((l) => {
