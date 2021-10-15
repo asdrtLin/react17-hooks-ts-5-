@@ -15,6 +15,7 @@ export type LanguageActionTypes = ChangeLanguageAction|AddLanguageAction;
 
 
 export const changeLanguageActionCreator = (languageCode:'zh'|'en'):ChangeLanguageAction =>{
+    // debugger
     return {
         type:CHANGE_LANGUAGE,
         payload:languageCode
@@ -22,6 +23,7 @@ export const changeLanguageActionCreator = (languageCode:'zh'|'en'):ChangeLangua
 }
 
 export const addLanguageActionCreator = (name:string,code:string):AddLanguageAction =>{
+    // debugger
     return {
         type:ADD_LANGUAGE,
         payload:{name,code}
