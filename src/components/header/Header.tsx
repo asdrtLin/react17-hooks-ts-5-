@@ -26,7 +26,6 @@ export const Header: React.FC = (props) => {
   const params = useParams(); //可以获得url参数
   const match = useRouteMatch(); //可以获得路径匹配的数据
   const language = useSelector((state) => state.language);
-  debugger
   const languageList = useSelector((state) => state.languageList);
   const dispatch = useDispatch();
   const { t } = useTranslation();
