@@ -25,8 +25,8 @@ export const Header: React.FC = (props) => {
   const loction = useLocation(); //可以获得location路由数据，当前路径的信息
   const params = useParams(); //可以获得url参数
   const match = useRouteMatch(); //可以获得路径匹配的数据
-  const language = useSelector((state) => state.language);
-  const languageList = useSelector((state) => state.languageList);
+  const language = useSelector((state) => state.languageReducer.language);
+  const languageList = useSelector((state) => state.languageReducer.languageList);
   const dispatch = useDispatch();
   const { t } = useTranslation();
   return (

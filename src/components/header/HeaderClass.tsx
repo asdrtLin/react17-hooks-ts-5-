@@ -21,8 +21,8 @@ type PropsType = RouteComponentProps & //react-router路由props类型
 
 const mapStateToProps = (state:RootState) => {
   return {
-    language:state.language,
-    languageList:state.languageList
+    language:state.languageReducer.language,
+    languageList:state.languageReducer.languageList
   }
 }
 

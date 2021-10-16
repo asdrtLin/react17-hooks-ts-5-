@@ -13,40 +13,46 @@ import sideImage3 from "../../assets/images/sider_2019_02-04-2.png";
 import { Row, Col, Typography, Spin } from "antd";
 import styles from "./HomePage.module.css";
 import { withTranslation, WithTranslation } from "react-i18next";
-import axios from "axios";
-interface State {
-  productList: Array<object>;
-  loading: boolean;
-  error: string | null;
+import { Dispatch } from 'redux'
+
+import {ThunkDispatch} from 'redux-thunk'
+
+import { connect } from 'react-redux'
+
+import { RootState } from "../../redux/store";
+
+import { giveMeDataActionCreator } from '../../redux/recommendProducts/recommendProductsCreateAction'
+
+
+const mapStateToProps = (state:RootState) => {
+  return {
+    loading: state.recommendProductsReducer.loading,
+    error:state.recommendProductsReducer.error,
+    productList:state.recommendProductsReducer.productList
+  }
 }
 
-class HomePageComponent extends Component<WithTranslation, State> {
-  state = {
-    productList: [{touristRoutes:[]},{touristRoutes:[]},{touristRoutes:[]}] as [{touristRoutes:[]},{touristRoutes:[]},{touristRoutes:[]}],
-    loading: true,
-    error: null,
-  };
-  async componentDidMount() {
-    try {
-      const { data } = await axios.get(
-        "https://www.fastmock.site/mock/7a00225a695edc0521497bbbf1f9afda/api/homes",
-        {
-          headers: {
-            "x-icode": "FB80558A73FA658E",
-          },
-        }
-      );
-      if(data instanceof Array)this.setState({ productList: data, loading: false, error: null });
-    } catch (error) {
-        if(error instanceof Error){
-            this.setState({error:error.message,loading:false})
-        }
+const mapDispatchToProps = (dispatch:any) => {
+  return {
+    giveMeData: () => {
+      dispatch(giveMeDataActionCreator())
     }
+  }
+}
+
+type PropsType=WithTranslation & 
+ReturnType<typeof mapStateToProps> & 
+ReturnType<typeof mapDispatchToProps>;
+
+class HomePageComponent extends Component<PropsType> {
+
+ componentDidMount() {
+    this.props.giveMeData()
   }
   render() {
     // console.log(this.props.t)
-    const { t } = this.props;
-    const { productList,loading,error } = this.state;
+    const { t ,productList,loading,error} = this.props;
+
     if(loading){
         return <Spin
         size='large'
@@ -108,4 +114,4 @@ class HomePageComponent extends Component<WithTranslation, State> {
     );
   }
 }
-export const HomePage = withTranslation()(HomePageComponent);
+export const HomePage = connect(mapStateToProps,mapDispatchToProps)(withTranslation()(HomePageComponent));
