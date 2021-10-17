@@ -38,7 +38,7 @@ export const Header: React.FC = (props) => {
           overlay={
             <Menu
               onClick={({ item, key, keyPath, domEvent }) => {
-                  debugger
+                  // debugger
                 if (key === "new") {
                   //添加
                   dispatch(
